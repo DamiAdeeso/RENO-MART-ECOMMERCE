@@ -25,13 +25,20 @@ orderRouter.post(
 
 
 );
-let i = 0; 
+orderRouter.get(
+  "/mine",
+  isAuth,
+  expressAsyncHandler(async(req,res)=>{console.log("here")
+    const orders = await Order.find({user:req.user._id});
+    res.send(orders);
+  })
+)
 orderRouter.get(
   "/:id",isAuth,
   expressAsyncHandler(async(req,res)=>{
     
       const order = await Order.findById(req.params.id)
-      if(order){i++; console.log(i);
+      if(order){
       res.send(order);
       }
     
